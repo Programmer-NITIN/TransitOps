@@ -5,10 +5,10 @@ import './Sidebar.css';
 // Role-based navigation access control
 const navItems = [
   { path: '/dashboard', icon: 'dashboard', label: 'Dashboard', roles: ['Fleet Manager', 'Driver', 'Safety Officer', 'Financial Analyst'] },
-  { path: '/fleet', icon: 'local_shipping', label: 'Fleet', roles: ['Fleet Manager'] },
+  { path: '/fleet', icon: 'local_shipping', label: 'Fleet', roles: ['Fleet Manager', 'Safety Officer', 'Financial Analyst'] },
   { path: '/drivers', icon: 'badge', label: 'Drivers', roles: ['Fleet Manager', 'Safety Officer'] },
-  { path: '/trips', icon: 'route', label: 'Trips', roles: ['Fleet Manager', 'Driver'] },
-  { path: '/maintenance', icon: 'build', label: 'Maintenance', roles: ['Fleet Manager'] },
+  { path: '/trips', icon: 'route', label: 'Trips', roles: ['Fleet Manager', 'Driver', 'Safety Officer'] },
+  { path: '/maintenance', icon: 'build', label: 'Maintenance', roles: ['Fleet Manager', 'Safety Officer', 'Financial Analyst'] },
   { path: '/fuel-logs', icon: 'local_gas_station', label: 'Fuel Logs', roles: ['Fleet Manager', 'Driver'] },
   { path: '/expenses', icon: 'account_balance_wallet', label: 'Expenses', roles: ['Fleet Manager', 'Financial Analyst'] },
   { path: '/analytics', icon: 'analytics', label: 'Analytics', roles: ['Fleet Manager', 'Financial Analyst'] },

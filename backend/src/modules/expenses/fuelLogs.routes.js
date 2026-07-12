@@ -41,7 +41,7 @@ router.get('/stats', async (req, res, next) => {
 });
 
 // POST /api/fuel-logs — Create fuel log
-router.post('/', authorize('Fleet Manager', 'Driver'), [
+router.post('/', authorize('Fleet Manager', 'Driver', 'Financial Analyst'), [
   body('vehicle_id').notEmpty().withMessage('Vehicle required'),
   body('liters').isFloat({ min: 0.1 }).withMessage('Liters must be positive'),
   body('cost').isFloat({ min: 0.01 }).withMessage('Cost must be positive'),
@@ -60,7 +60,7 @@ router.post('/', authorize('Fleet Manager', 'Driver'), [
 });
 
 // DELETE /api/fuel-logs/:id
-router.delete('/:id', authorize('Fleet Manager'), async (req, res, next) => {
+router.delete('/:id', authorize('Fleet Manager', 'Financial Analyst'), async (req, res, next) => {
   try {
     const result = await query('DELETE FROM fuel_logs WHERE id = $1 RETURNING id', [req.params.id]);
     if (!result.rows.length) { const e = new Error('Not found'); e.statusCode = 404; throw e; }
