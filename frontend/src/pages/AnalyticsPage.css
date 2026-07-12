@@ -1,0 +1,16 @@
+/* Analytics Page */
+.analytics-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 16px; }
+.analytics-stat { display: flex; align-items: center; gap: 16px; padding: 20px 24px !important; }
+
+.charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.chart-card { padding: 24px !important; min-height: 340px; }
+.chart-card .card-title { margin-bottom: 16px; }
+
+/* Custom Tooltip */
+.chart-tooltip { background: var(--surface-container-high); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-md); padding: 10px 14px; box-shadow: var(--shadow-md); }
+.chart-tooltip .tooltip-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--on-surface-variant); margin-bottom: 4px; }
+.chart-tooltip p { font-size: 12px; margin: 2px 0; }
+
+/* Recharts overrides */
+.recharts-legend-item-text { font-family: 'Inter', sans-serif !important; }
+.recharts-pie-label-text { font-family: 'JetBrains Mono', monospace !important; font-size: 10px !important; fill: var(--on-surface-variant) !important; }
