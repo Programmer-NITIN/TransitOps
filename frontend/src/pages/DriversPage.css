@@ -1,0 +1,23 @@
+/* Drivers Page */
+.drivers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+.driver-card-skeleton { height: 200px; border-radius: var(--radius-lg); }
+.driver-card { padding: 20px !important; }
+
+.driver-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.driver-avatar { width: 44px; height: 44px; border-radius: var(--radius-full); background: var(--surface-container-high); display: flex; align-items: center; justify-content: center; font-family: 'Geist', sans-serif; font-size: 14px; font-weight: 700; color: var(--on-surface); border: 2px solid; flex-shrink: 0; }
+.driver-info { flex: 1; min-width: 0; }
+.driver-name { font-weight: 600; font-size: 15px; color: var(--on-surface); }
+.driver-license { font-size: 10px; color: var(--on-surface-variant); margin-top: 2px; }
+
+.driver-details { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-bottom: 16px; }
+.driver-detail { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--on-surface-variant); }
+.driver-detail .material-symbols-outlined { font-size: 16px; }
+.driver-detail.expired { color: var(--error); }
+.driver-detail.expiring { color: #f59e0b; }
+
+.driver-footer { display: flex; align-items: center; gap: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06); }
+.safety-score { flex: 1; display: flex; align-items: center; gap: 8px; }
+.safety-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; color: var(--outline); letter-spacing: 0.05em; }
+.safety-bar-track { flex: 1; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.06); }
+.safety-bar-fill { height: 100%; border-radius: 2px; transition: width 0.4s ease; }
+.safety-value { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; min-width: 24px; text-align: right; }

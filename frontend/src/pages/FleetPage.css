@@ -1,0 +1,16 @@
+/* Fleet Page Styles */
+.fleet-kpi { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; padding: 20px 16px; }
+.fleet-kpi .kpi-icon { font-size: 24px; padding: 10px; border-radius: var(--radius-md); background: rgba(255,255,255,0.04); margin-bottom: 4px; }
+.fleet-kpi-value { font-family: 'Geist', sans-serif; font-size: 28px; font-weight: 800; color: var(--on-surface); }
+.fleet-kpi-label { color: var(--on-surface-variant); }
+.kpi-icon-available { color: #10b981; }
+.kpi-icon-on-trip { color: #4d8eff; }
+.kpi-icon-in-shop { color: #f59e0b; }
+.kpi-icon-revenue { color: #f59e0b; }
+
+/* Filters */
+.fleet-filters { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px !important; margin-bottom: 16px; }
+.filter-group { display: flex; align-items: center; gap: 10px; }
+.filter-select { width: auto; min-width: 140px; padding: 7px 30px 7px 10px; font-size: 13px; }
+.filter-search { position: relative; width: 280px; }
+.filter-search .input { font-size: 13px; padding: 7px 10px 7px 36px; }

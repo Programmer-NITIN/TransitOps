@@ -1,0 +1,50 @@
+/* Dashboard Styles */
+.dash-loading { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 24px; }
+.kpi-skeleton { height: 140px; border-radius: var(--radius-lg); }
+
+/* KPI Cards */
+.kpi-card { padding: 24px; position: relative; overflow: hidden; }
+.kpi-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.kpi-label { color: var(--on-surface-variant); }
+.kpi-icon { font-size: 28px; padding: 8px; border-radius: var(--radius-md); background: rgba(255,255,255,0.04); }
+.kpi-icon-primary { color: var(--primary); }
+.kpi-icon-info { color: #4d8eff; }
+.kpi-icon-success { color: #10b981; }
+.kpi-icon-revenue { color: #f59e0b; }
+.kpi-value { font-family: 'Geist', sans-serif; font-size: 36px; font-weight: 800; color: var(--on-surface); letter-spacing: -0.02em; line-height: 1; }
+.kpi-sub { font-size: 13px; color: var(--on-surface-variant); margin-top: 8px; }
+
+.kpi-primary::before { background: linear-gradient(180deg, rgba(173,198,255,0.06) 0%, transparent 100%); }
+.kpi-info::before { background: linear-gradient(180deg, rgba(77,142,255,0.06) 0%, transparent 100%); }
+.kpi-success::before { background: linear-gradient(180deg, rgba(16,185,129,0.06) 0%, transparent 100%); }
+.kpi-revenue::before { background: linear-gradient(180deg, rgba(245,158,11,0.06) 0%, transparent 100%); }
+
+/* Dashboard Grid */
+.dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.card-title { font-family: 'Geist', sans-serif; font-size: 16px; font-weight: 600; margin-bottom: 20px; color: var(--on-surface); }
+
+/* Status Bars */
+.status-bars { display: flex; flex-direction: column; gap: 16px; }
+.status-bar-row { display: flex; flex-direction: column; gap: 6px; }
+.status-bar-label { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--on-surface-variant); }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.status-count { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--on-surface); }
+.status-bar-track { height: 6px; border-radius: 3px; background: rgba(255,255,255,0.06); overflow: hidden; }
+.status-bar-fill { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
+
+/* Recent Trips */
+.recent-trips-list { display: flex; flex-direction: column; gap: 0; }
+.trip-row { padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04); display: flex; justify-content: space-between; align-items: center; }
+.trip-row:last-child { border-bottom: none; }
+.trip-route { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--on-surface); }
+.trip-arrow { font-size: 14px; color: var(--outline); }
+.trip-from, .trip-to { max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.trip-meta { display: flex; align-items: center; gap: 10px; }
+.trip-vehicle { font-size: 11px; color: var(--on-surface-variant); }
+
+/* Quick Stats Row */
+.dash-stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.stat-mini { display: flex; align-items: center; gap: 16px; padding: 20px; }
+.stat-mini .material-symbols-outlined { font-size: 28px; }
+.stat-mini-value { font-family: 'Geist', sans-serif; font-size: 20px; font-weight: 700; color: var(--on-surface); }
+.stat-mini-label { font-size: 12px; color: var(--on-surface-variant); margin-top: 2px; }
