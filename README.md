@@ -1,6 +1,6 @@
 # 🌐 TransitOps: Next-Generation Fleet & Logistics Command Center
 
-[![Live Demo](https://img.shields.io/badge/Demo-Live_Deployment-00C7B7?style=for-the-badge&logo=vercel)](https://transitops.vercel.app)
+[![Live Demo](https://img.shields.io/badge/Demo-Live_Deployment-00C7B7?style=for-the-badge&logo=vercel)](https://transit-ops-seven.vercel.app/dashboard)
 [![Tech Stack](https://img.shields.io/badge/Stack-React_18%20%7C%20Node.js%20%7C%20PostgreSQL-2b3137?style=for-the-badge&logo=github)](#-technical-architecture)
 [![Design](https://img.shields.io/badge/UI_UX-Glassmorphism_Design_System-purple?style=for-the-badge)](#-signature-design-system--ui-ux)
 [![Database](https://img.shields.io/badge/Database-Neon_Serverless_Postgres-00e599?style=for-the-badge&logo=postgresql)](#-database-schema--entity-relationships)
