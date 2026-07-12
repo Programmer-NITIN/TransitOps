@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '../services/api';
+import { exportToCsv } from '../utils/csvExport';
 
 const CATEGORIES = ['Fuel', 'Toll', 'Maintenance', 'Insurance', 'Parking', 'Fine', 'Other'];
 const emptyForm = { vehicle_id: '', category: 'Fuel', amount: '', description: '', expense_date: '' };
@@ -66,7 +67,10 @@ export default function ExpensesPage() {
 
       <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div><h1 className="page-title">Expense Ledger</h1><p className="page-subtitle">Track and categorize all operational expenses</p></div>
-        <button className="btn btn-primary" onClick={() => { setEditing(null); setForm(emptyForm); setModal(true); }}><span className="material-symbols-outlined">add</span> Add Expense</button>
+        <div style={{ display: 'flex', gap: 10 }}>
+          <button className="btn btn-secondary" onClick={() => exportToCsv('expenses.csv', ['Category','Description','Amount','Vehicle','Date'], expenses, ['category','description','amount','registration_number','expense_date'])}><span className="material-symbols-outlined">download</span> Export CSV</button>
+          <button className="btn btn-primary" onClick={() => { setEditing(null); setForm(emptyForm); setModal(true); }}><span className="material-symbols-outlined">add</span> Add Expense</button>
+        </div>
       </div>
 
       {/* Stats + Breakdown */}

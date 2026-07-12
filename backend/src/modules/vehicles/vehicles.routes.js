@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { body } = require('express-validator');
 const validate = require('../../middleware/validate');
 const authenticate = require('../../middleware/auth');
+const authorize = require('../../middleware/rbac');
 const ctrl = require('./vehicles.controller');
 
 router.use(authenticate);
@@ -16,7 +17,7 @@ router.get('/', ctrl.list);
 router.get('/:id', ctrl.getById);
 
 // POST /api/vehicles
-router.post('/',
+router.post('/', authorize('Fleet Manager'),
   [
     body('registration_number').trim().notEmpty().withMessage('Registration number required'),
     body('name_model').trim().notEmpty().withMessage('Vehicle model required'),
@@ -29,9 +30,9 @@ router.post('/',
 );
 
 // PUT /api/vehicles/:id
-router.put('/:id', ctrl.update);
+router.put('/:id', authorize('Fleet Manager'), ctrl.update);
 
 // DELETE /api/vehicles/:id
-router.delete('/:id', ctrl.remove);
+router.delete('/:id', authorize('Fleet Manager'), ctrl.remove);
 
 module.exports = router;

@@ -41,6 +41,11 @@ export default function MaintenancePage() {
     catch (err) { showToast(err.error || 'Failed', 'error'); }
   };
 
+  const handleClose = async (id) => {
+    try { await api.patch(`/maintenance/${id}/close`); showToast('Maintenance closed — vehicle restored'); load(); }
+    catch (err) { showToast(err.error || err.message || 'Failed', 'error'); }
+  };
+
   const priorityColor = (p) => ({ Low: '#94a3b8', Medium: '#4d8eff', High: '#f59e0b', Critical: '#ef4444' }[p] || '#94a3b8');
   const statusColor = (s) => s === 'Open' ? '#f59e0b' : '#10b981';
   const fmt = (n) => Number(n || 0).toLocaleString('en-IN');
@@ -88,6 +93,7 @@ export default function MaintenancePage() {
                 <td><span className="badge" style={{ background: `${statusColor(m.status)}20`, color: statusColor(m.status) }}>{m.status}</span></td>
                 <td>{new Date(m.start_date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</td>
                 <td><div style={{ display: 'flex', gap: 4 }}>
+                  {m.status === 'Open' && <button className="btn-ghost" onClick={() => handleClose(m.id)} title="Close & Restore Vehicle"><span className="material-symbols-outlined" style={{ fontSize: 18, color: '#10b981' }}>check_circle</span></button>}
                   <button className="btn-ghost" onClick={() => openEdit(m)}><span className="material-symbols-outlined" style={{ fontSize: 18 }}>edit</span></button>
                   <button className="btn-ghost" onClick={() => handleDelete(m.id)}><span className="material-symbols-outlined" style={{ fontSize: 18, color: 'var(--error)' }}>delete</span></button>
                 </div></td>

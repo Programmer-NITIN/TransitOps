@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '../services/api';
+import { exportToCsv } from '../utils/csvExport';
 import './FleetPage.css';
 
 const VEHICLE_TYPES = ['Truck', 'Van', 'Trailer', 'Tanker', 'Pickup', 'Bus'];
@@ -74,9 +75,10 @@ export default function FleetPage() {
           <h1 className="page-title">Fleet Inventory</h1>
           <p className="page-subtitle">Manage your vehicle fleet and track utilization</p>
         </div>
-        <button className="btn btn-primary" onClick={openAdd}>
-          <span className="material-symbols-outlined">add</span> Add Vehicle
-        </button>
+        <div style={{ display: 'flex', gap: 10 }}>
+          <button className="btn btn-secondary" onClick={() => exportToCsv('fleet.csv', ['Registration','Model','Type','Capacity (kg)','Odometer (km)','Region','Status','Acquisition Cost'], vehicles, ['registration_number','name_model','type','max_load_capacity_kg','current_odometer_km','region','status','acquisition_cost'])}><span className="material-symbols-outlined">download</span> Export CSV</button>
+          <button className="btn btn-primary" onClick={openAdd}><span className="material-symbols-outlined">add</span> Add Vehicle</button>
+        </div>
       </div>
 
       {/* KPI Row */}

@@ -4,3 +4,4 @@ exports.create = async (req, res, next) => { try { res.status(201).json({ succes
 exports.update = async (req, res, next) => { try { res.json({ success: true, data: await svc.update(req.params.id, req.body) }); } catch (e) { next(e); } };
 exports.remove = async (req, res, next) => { try { await svc.delete(req.params.id); res.json({ success: true, message: 'Deleted' }); } catch (e) { next(e); } };
 exports.stats = async (req, res, next) => { try { res.json({ success: true, data: await svc.getStats() }); } catch (e) { next(e); } };
+exports.close = async (req, res, next) => { try { res.json({ success: true, data: await svc.close(req.params.id), message: 'Maintenance log closed' }); } catch (e) { next(e); } };

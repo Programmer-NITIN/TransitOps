@@ -9,6 +9,8 @@ import TripsPage from './pages/TripsPage';
 import MaintenancePage from './pages/MaintenancePage';
 import ExpensesPage from './pages/ExpensesPage';
 import AnalyticsPage from './pages/AnalyticsPage';
+import FuelLogsPage from './pages/FuelLogsPage';
+import LandingPage from './pages/LandingPage';
 import './index.css';
 
 function ProtectedRoute({ children }) {
@@ -29,6 +31,7 @@ function AppRoutes() {
 
   return (
     <Routes>
+      <Route path="/" element={user ? <Navigate to="/dashboard" replace /> : <LandingPage />} />
       <Route path="/login" element={user ? <Navigate to="/dashboard" replace /> : <LoginPage />} />
       <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
       <Route path="/fleet" element={<ProtectedRoute><FleetPage /></ProtectedRoute>} />
@@ -36,8 +39,9 @@ function AppRoutes() {
       <Route path="/trips" element={<ProtectedRoute><TripsPage /></ProtectedRoute>} />
       <Route path="/maintenance" element={<ProtectedRoute><MaintenancePage /></ProtectedRoute>} />
       <Route path="/expenses" element={<ProtectedRoute><ExpensesPage /></ProtectedRoute>} />
+      <Route path="/fuel-logs" element={<ProtectedRoute><FuelLogsPage /></ProtectedRoute>} />
       <Route path="/analytics" element={<ProtectedRoute><AnalyticsPage /></ProtectedRoute>} />
-      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }

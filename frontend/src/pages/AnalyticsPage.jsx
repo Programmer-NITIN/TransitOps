@@ -20,16 +20,22 @@ export default function AnalyticsPage() {
   const [fuel, setFuel] = useState([]);
   const [expenseBreakdown, setExpenseBreakdown] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [roiData, setRoiData] = useState([]);
+  const [vehicleCosts, setVehicleCosts] = useState([]);
 
   useEffect(() => {
     Promise.all([
       api.get('/reports/dashboard'),
       api.get('/reports/fuel-efficiency'),
       api.get('/reports/expense-breakdown'),
-    ]).then(([d, f, e]) => {
+      api.get('/reports/vehicle-roi'),
+      api.get('/reports/vehicle-costs'),
+    ]).then(([d, f, e, r, vc]) => {
       setDashboard(d.data);
       setFuel(f.data);
       setExpenseBreakdown(e.data);
+      setRoiData(r.data.map(v => ({ name: v.registration_number, roi: parseFloat(v.roi_percent), revenue: parseFloat(v.total_revenue), maint: parseFloat(v.maintenance_cost), fuel: parseFloat(v.fuel_cost) })));
+      setVehicleCosts(vc.data.filter(v => parseFloat(v.operational_cost) > 0).map(v => ({ name: v.registration_number, fuel: parseFloat(v.fuel_cost), maintenance: parseFloat(v.maintenance_cost) })));
     }).catch(console.error).finally(() => setLoading(false));
   }, []);
 
@@ -157,6 +163,45 @@ export default function AnalyticsPage() {
               </PieChart>
             </ResponsiveContainer>
           ) : <div className="empty-state"><p>No expense data</p></div>}
+        </div>
+      </div>
+
+      {/* Charts Row 3 — ROI + Cost Breakdown */}
+      <div className="charts-grid">
+        {/* Vehicle ROI */}
+        <div className="card glass-panel chart-card">
+          <h3 className="card-title">Vehicle ROI (%)</h3>
+          {roiData.length > 0 ? (
+            <ResponsiveContainer width="100%" height={280}>
+              <BarChart data={roiData} barSize={28}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+                <XAxis dataKey="name" tick={{ fill: 'var(--on-surface-variant)', fontSize: 10, fontFamily: "'JetBrains Mono', monospace" }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fill: 'var(--on-surface-variant)', fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => `${v}%`} />
+                <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
+                <Bar dataKey="roi" name="ROI %" radius={[6, 6, 0, 0]}>
+                  {roiData.map((entry, i) => <Cell key={i} fill={entry.roi >= 0 ? '#10b981' : '#ef4444'} />)}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          ) : <div className="empty-state"><p>No ROI data yet</p></div>}
+        </div>
+
+        {/* Operational Cost Breakdown */}
+        <div className="card glass-panel chart-card">
+          <h3 className="card-title">Operational Cost per Vehicle</h3>
+          {vehicleCosts.length > 0 ? (
+            <ResponsiveContainer width="100%" height={280}>
+              <BarChart data={vehicleCosts} barSize={28}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+                <XAxis dataKey="name" tick={{ fill: 'var(--on-surface-variant)', fontSize: 10, fontFamily: "'JetBrains Mono', monospace" }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fill: 'var(--on-surface-variant)', fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => `₹${(v / 1000).toFixed(0)}k`} />
+                <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
+                <Legend formatter={(val) => <span style={{ color: 'var(--on-surface-variant)', fontSize: 12 }}>{val}</span>} />
+                <Bar dataKey="fuel" name="Fuel" stackId="a" fill="#f59e0b" radius={[0, 0, 0, 0]} />
+                <Bar dataKey="maintenance" name="Maintenance" stackId="a" fill="#4d8eff" radius={[6, 6, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          ) : <div className="empty-state"><p>No cost data yet</p></div>}
         </div>
       </div>
     </>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '../services/api';
+import { exportToCsv } from '../utils/csvExport';
 import './TripsPage.css';
 
 const STATUSES = ['Draft', 'Dispatched', 'Completed', 'Cancelled'];
@@ -33,13 +34,13 @@ export default function TripsPage() {
   const handleSubmit = async (e) => {
     e.preventDefault(); setSaving(true);
     try { await api.post('/trips', form); showToast('Trip created'); setModal(false); load(); }
-    catch (err) { showToast(err.error || 'Failed', 'error'); }
+    catch (err) { showToast(err.error || err.message || 'Failed', 'error'); }
     finally { setSaving(false); }
   };
 
   const changeStatus = async (id, status) => {
     try { await api.patch(`/trips/${id}/status`, { status }); showToast(`Trip ${status.toLowerCase()}`); load(); }
-    catch (err) { showToast(err.error || 'Failed', 'error'); }
+    catch (err) { showToast(err.error || err.message || 'Failed', 'error'); }
   };
 
   const statusBadge = (s) => <span className={`badge badge-${s.toLowerCase()}`}>{s}</span>;
@@ -51,7 +52,10 @@ export default function TripsPage() {
 
       <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div><h1 className="page-title">Trip Dispatching</h1><p className="page-subtitle">Plan, dispatch, and track your logistics routes</p></div>
-        <button className="btn btn-primary" onClick={() => { setForm(emptyForm); setModal(true); }}><span className="material-symbols-outlined">add</span> New Trip</button>
+        <div style={{ display: 'flex', gap: 10 }}>
+          <button className="btn btn-secondary" onClick={() => exportToCsv('trips.csv', ['Source','Destination','Vehicle','Driver','Status','Distance (km)','Cargo (kg)','Revenue'], trips, ['source','destination','registration_number','driver_name','status','planned_distance_km','cargo_weight_kg','revenue'])}><span className="material-symbols-outlined">download</span> Export CSV</button>
+          <button className="btn btn-primary" onClick={() => { setForm(emptyForm); setModal(true); }}><span className="material-symbols-outlined">add</span> New Trip</button>
+        </div>
       </div>
 
       {/* Summary */}
@@ -102,7 +106,7 @@ export default function TripsPage() {
             <div className="trip-card-details">
               <div className="trip-detail"><span className="material-symbols-outlined">local_shipping</span>{t.registration_number} — {t.name_model}</div>
               <div className="trip-detail"><span className="material-symbols-outlined">badge</span>{t.driver_name}</div>
-              {t.cargo_weight_kg && <div className="trip-detail"><span className="material-symbols-outlined">inventory_2</span>{fmt(t.cargo_weight_kg)} kg</div>}
+              {t.cargo_weight_kg && <div className="trip-detail"><span className="material-symbols-outlined">inventory_2</span>{fmt(t.cargo_weight_kg)} / {fmt(t.max_load_capacity_kg)} kg</div>}
               {t.revenue > 0 && <div className="trip-detail"><span className="material-symbols-outlined">payments</span>₹{fmt(t.revenue)}</div>}
             </div>
             <div className="trip-card-actions">
