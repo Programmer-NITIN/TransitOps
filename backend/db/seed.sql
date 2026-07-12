@@ -11,12 +11,12 @@ INSERT INTO roles (name, description) VALUES
     ('Financial Analyst', 'Reviews operational expenses, fuel consumption, maintenance costs, and profitability');
 
 -- USERS (one per role, password: "TransitOps@123" hashed with bcrypt)
--- Hash: $2b$10$YKQgKzP8QGHxZwO7xLxM6eSXYfVqyKJ4Bq4JOzBQaJz6RhVHGl8Xi
+-- Hash: $2b$10$0WeLNA3FdmglGAf3ti2Sl.gJTrkoBAjg1PZCARRLxxoHcRt0f/hNi
 INSERT INTO users (email, password_hash, full_name, role_id) VALUES
-    ('fleet@transitops.in', '$2b$10$YKQgKzP8QGHxZwO7xLxM6eSXYfVqyKJ4Bq4JOzBQaJz6RhVHGl8Xi', 'Rajesh Kumar', 1),
-    ('driver@transitops.in', '$2b$10$YKQgKzP8QGHxZwO7xLxM6eSXYfVqyKJ4Bq4JOzBQaJz6RhVHGl8Xi', 'Priya Sharma', 2),
-    ('safety@transitops.in', '$2b$10$YKQgKzP8QGHxZwO7xLxM6eSXYfVqyKJ4Bq4JOzBQaJz6RhVHGl8Xi', 'Amit Patel', 3),
-    ('finance@transitops.in', '$2b$10$YKQgKzP8QGHxZwO7xLxM6eSXYfVqyKJ4Bq4JOzBQaJz6RhVHGl8Xi', 'Sneha Reddy', 4);
+    ('fleet@transitops.in', '$2b$10$0WeLNA3FdmglGAf3ti2Sl.gJTrkoBAjg1PZCARRLxxoHcRt0f/hNi', 'Rajesh Kumar', 1),
+    ('driver@transitops.in', '$2b$10$0WeLNA3FdmglGAf3ti2Sl.gJTrkoBAjg1PZCARRLxxoHcRt0f/hNi', 'Priya Sharma', 2),
+    ('safety@transitops.in', '$2b$10$0WeLNA3FdmglGAf3ti2Sl.gJTrkoBAjg1PZCARRLxxoHcRt0f/hNi', 'Amit Patel', 3),
+    ('finance@transitops.in', '$2b$10$0WeLNA3FdmglGAf3ti2Sl.gJTrkoBAjg1PZCARRLxxoHcRt0f/hNi', 'Sneha Reddy', 4);
 
 -- VEHICLES (8 vehicles across Indian regions)
 INSERT INTO vehicles (registration_number, name_model, type, max_load_capacity_kg, current_odometer_km, acquisition_cost, status, region) VALUES

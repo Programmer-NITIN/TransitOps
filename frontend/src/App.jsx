@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import Layout from './components/layout/Layout';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import FleetPage from './pages/FleetPage';
@@ -12,9 +13,15 @@ import './index.css';
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
-  if (loading) return <div className="page-container"><div className="skeleton" style={{ height: 40, width: 200 }} /></div>;
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', background: 'var(--surface)' }}>
+        <span className="material-symbols-outlined spin" style={{ fontSize: 40, color: 'var(--primary)' }}>progress_activity</span>
+      </div>
+    );
+  }
   if (!user) return <Navigate to="/login" replace />;
-  return children;
+  return <Layout>{children}</Layout>;
 }
 
 function AppRoutes() {
