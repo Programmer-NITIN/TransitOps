@@ -3,7 +3,7 @@ import api from '../services/api';
 import './TripsPage.css';
 
 const STATUSES = ['Draft', 'Dispatched', 'Completed', 'Cancelled'];
-const emptyForm = { vehicle_id: '', driver_id: '', source: '', destination: '', planned_distance_km: '', load_weight_kg: '', revenue: '' };
+const emptyForm = { vehicle_id: '', driver_id: '', source: '', destination: '', planned_distance_km: '', cargo_weight_kg: '', revenue: '' };
 
 export default function TripsPage() {
   const [trips, setTrips] = useState([]);
@@ -102,7 +102,7 @@ export default function TripsPage() {
             <div className="trip-card-details">
               <div className="trip-detail"><span className="material-symbols-outlined">local_shipping</span>{t.registration_number} — {t.name_model}</div>
               <div className="trip-detail"><span className="material-symbols-outlined">badge</span>{t.driver_name}</div>
-              {t.load_weight_kg && <div className="trip-detail"><span className="material-symbols-outlined">inventory_2</span>{fmt(t.load_weight_kg)} kg</div>}
+              {t.cargo_weight_kg && <div className="trip-detail"><span className="material-symbols-outlined">inventory_2</span>{fmt(t.cargo_weight_kg)} kg</div>}
               {t.revenue > 0 && <div className="trip-detail"><span className="material-symbols-outlined">payments</span>₹{fmt(t.revenue)}</div>}
             </div>
             <div className="trip-card-actions">
@@ -140,7 +140,7 @@ export default function TripsPage() {
               </div>
               <div className="form-row">
                 <div className="form-group"><label className="form-label">Distance (km)</label><input className="input" type="number" step="0.1" min="0.1" value={form.planned_distance_km} onChange={(e) => setForm({ ...form, planned_distance_km: e.target.value })} required /></div>
-                <div className="form-group"><label className="form-label">Load (kg)</label><input className="input" type="number" step="0.1" value={form.load_weight_kg} onChange={(e) => setForm({ ...form, load_weight_kg: e.target.value })} /></div>
+                <div className="form-group"><label className="form-label">Cargo Weight (kg)</label><input className="input" type="number" step="0.1" min="0.1" value={form.cargo_weight_kg} onChange={(e) => setForm({ ...form, cargo_weight_kg: e.target.value })} required /></div>
               </div>
               <div className="form-group"><label className="form-label">Revenue (₹)</label><input className="input" type="number" step="0.01" min="0" value={form.revenue} onChange={(e) => setForm({ ...form, revenue: e.target.value })} /></div>
               <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>

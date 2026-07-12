@@ -3,7 +3,7 @@ const { query } = require('../../config/db');
 class ExpenseService {
   async list(filters = {}) {
     let sql = `SELECT e.*, v.registration_number, v.name_model
-      FROM expenses e LEFT JOIN vehicles v ON e.vehicle_id = v.id WHERE 1=1`;
+      FROM expenses e JOIN vehicles v ON e.vehicle_id = v.id WHERE 1=1`;
     const params = []; let idx = 1;
     if (filters.category) { sql += ` AND e.category = $${idx++}`; params.push(filters.category); }
     if (filters.vehicle_id) { sql += ` AND e.vehicle_id = $${idx++}`; params.push(filters.vehicle_id); }
@@ -15,7 +15,7 @@ class ExpenseService {
     const result = await query(
       `INSERT INTO expenses (vehicle_id, category, amount, description, expense_date)
        VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-      [data.vehicle_id || null, data.category, data.amount, data.description, data.expense_date]
+      [data.vehicle_id, data.category, data.amount, data.description, data.expense_date]
     );
     return result.rows[0];
   }

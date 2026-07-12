@@ -6,23 +6,23 @@ class MaintenanceService {
       FROM maintenance_logs m JOIN vehicles v ON m.vehicle_id = v.id WHERE 1=1`;
     const params = []; let idx = 1;
     if (filters.vehicle_id) { sql += ` AND m.vehicle_id = $${idx++}`; params.push(filters.vehicle_id); }
-    if (filters.type) { sql += ` AND m.type = $${idx++}`; params.push(filters.type); }
-    sql += ` ORDER BY m.service_date DESC`;
+    if (filters.status) { sql += ` AND m.status = $${idx++}`; params.push(filters.status); }
+    sql += ` ORDER BY m.start_date DESC`;
     return (await query(sql, params)).rows;
   }
 
   async create(data) {
     const result = await query(
-      `INSERT INTO maintenance_logs (vehicle_id, type, description, cost, service_date, next_due_date)
-       VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-      [data.vehicle_id, data.type, data.description, data.cost, data.service_date, data.next_due_date || null]
+      `INSERT INTO maintenance_logs (vehicle_id, service_type, description, cost, priority, status, start_date, end_date)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
+      [data.vehicle_id, data.service_type, data.description, data.cost, data.priority || 'Medium', data.status || 'Open', data.start_date || new Date().toISOString(), data.end_date || null]
     );
     return result.rows[0];
   }
 
   async update(id, data) {
     const fields = []; const params = []; let idx = 1;
-    const allowed = ['vehicle_id', 'type', 'description', 'cost', 'service_date', 'next_due_date'];
+    const allowed = ['vehicle_id', 'service_type', 'description', 'cost', 'priority', 'status', 'start_date', 'end_date'];
     for (const f of allowed) { if (data[f] !== undefined) { fields.push(`${f} = $${idx++}`); params.push(data[f]); } }
     if (!fields.length) { const e = new Error('No fields'); e.statusCode = 400; throw e; }
     params.push(id);
@@ -41,10 +41,9 @@ class MaintenanceService {
     const result = await query(`
       SELECT COUNT(*) as total,
         COALESCE(SUM(cost), 0) as total_cost,
-        COUNT(*) FILTER (WHERE type = 'Preventive') as preventive,
-        COUNT(*) FILTER (WHERE type = 'Corrective') as corrective,
-        COUNT(*) FILTER (WHERE type = 'Emergency') as emergency,
-        COUNT(*) FILTER (WHERE next_due_date IS NOT NULL AND next_due_date < CURRENT_DATE) as overdue
+        COUNT(*) FILTER (WHERE status = 'Open') as open_count,
+        COUNT(*) FILTER (WHERE status = 'Closed') as closed_count,
+        COUNT(*) FILTER (WHERE priority = 'High' OR priority = 'Critical') as high_priority
       FROM maintenance_logs
     `);
     return result.rows[0];

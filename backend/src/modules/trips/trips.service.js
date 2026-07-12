@@ -34,16 +34,16 @@ class TripService {
 
   async create(data) {
     const result = await query(
-      `INSERT INTO trips (vehicle_id, driver_id, source, destination, planned_distance_km, load_weight_kg, revenue, status)
+      `INSERT INTO trips (vehicle_id, driver_id, source, destination, planned_distance_km, cargo_weight_kg, revenue, status)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
-      [data.vehicle_id, data.driver_id, data.source, data.destination, data.planned_distance_km, data.load_weight_kg || null, data.revenue || 0, data.status || 'Draft']
+      [data.vehicle_id, data.driver_id, data.source, data.destination, data.planned_distance_km, data.cargo_weight_kg || 1, data.revenue || 0, data.status || 'Draft']
     );
     return result.rows[0];
   }
 
   async update(id, data) {
     const fields = []; const params = []; let idx = 1;
-    const allowed = ['vehicle_id', 'driver_id', 'source', 'destination', 'planned_distance_km', 'actual_distance_km', 'load_weight_kg', 'revenue', 'status', 'started_at', 'completed_at'];
+    const allowed = ['vehicle_id', 'driver_id', 'source', 'destination', 'planned_distance_km', 'actual_distance_km', 'cargo_weight_kg', 'revenue', 'status', 'dispatched_at', 'completed_at'];
     for (const f of allowed) { if (data[f] !== undefined) { fields.push(`${f} = $${idx++}`); params.push(data[f]); } }
     if (fields.length === 0) { const e = new Error('No fields to update'); e.statusCode = 400; throw e; }
     params.push(id);
@@ -54,7 +54,7 @@ class TripService {
 
   async updateStatus(id, status) {
     const updates = { status };
-    if (status === 'Dispatched') updates.started_at = new Date().toISOString();
+    if (status === 'Dispatched') updates.dispatched_at = new Date().toISOString();
     if (status === 'Completed') updates.completed_at = new Date().toISOString();
     return this.update(id, updates);
   }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import api from '../services/api';
 
-const CATEGORIES = ['Fuel', 'Maintenance', 'Insurance', 'Toll', 'Salary', 'Penalty', 'Other'];
+const CATEGORIES = ['Fuel', 'Toll', 'Maintenance', 'Insurance', 'Parking', 'Fine', 'Other'];
 const emptyForm = { vehicle_id: '', category: 'Fuel', amount: '', description: '', expense_date: '' };
 
 const catIcon = (c) => ({ Fuel: 'local_gas_station', Maintenance: 'build', Insurance: 'shield', Toll: 'toll', Salary: 'payments', Penalty: 'gavel', Other: 'receipt_long' }[c] || 'receipt_long');

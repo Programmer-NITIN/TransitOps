@@ -9,10 +9,10 @@ router.get('/stats', ctrl.stats);
 router.get('/', ctrl.list);
 router.post('/', [
   body('vehicle_id').notEmpty().withMessage('Vehicle required'),
-  body('type').isIn(['Preventive', 'Corrective', 'Emergency']).withMessage('Invalid type'),
+  body('service_type').trim().notEmpty().withMessage('Service type required'),
   body('description').trim().notEmpty().withMessage('Description required'),
   body('cost').isFloat({ min: 0 }).withMessage('Cost must be positive'),
-  body('service_date').isDate().withMessage('Service date required'),
+  body('priority').optional().isIn(['Low', 'Medium', 'High', 'Critical']).withMessage('Invalid priority'),
 ], validate, ctrl.create);
 router.put('/:id', ctrl.update);
 router.delete('/:id', ctrl.remove);

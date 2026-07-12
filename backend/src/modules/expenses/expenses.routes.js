@@ -8,7 +8,8 @@ router.use(authenticate);
 router.get('/stats', ctrl.stats);
 router.get('/', ctrl.list);
 router.post('/', [
-  body('category').isIn(['Fuel', 'Maintenance', 'Insurance', 'Toll', 'Salary', 'Penalty', 'Other']).withMessage('Invalid category'),
+  body('vehicle_id').notEmpty().withMessage('Vehicle required'),
+  body('category').isIn(['Fuel', 'Toll', 'Maintenance', 'Insurance', 'Parking', 'Fine', 'Other']).withMessage('Invalid category'),
   body('amount').isFloat({ min: 0.01 }).withMessage('Amount required'),
   body('description').trim().notEmpty().withMessage('Description required'),
   body('expense_date').isDate().withMessage('Date required'),
