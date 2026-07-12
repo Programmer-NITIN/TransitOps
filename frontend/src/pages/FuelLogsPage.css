@@ -1,0 +1,58 @@
+/* Fuel Logs Page Styles */
+
+/* KPI Cards */
+.fuel-kpi {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  padding: 20px 16px;
+}
+
+.fuel-kpi .kpi-icon {
+  font-size: 24px;
+  padding: 10px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.04);
+  margin-bottom: 4px;
+}
+
+.fuel-kpi-value {
+  font-family: 'Geist', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--on-surface);
+}
+
+.fuel-kpi-label {
+  color: var(--on-surface-variant);
+}
+
+/* KPI Icon color variants */
+.kpi-icon-primary { color: var(--primary); }
+.kpi-icon-fuel { color: #f59e0b; }
+.kpi-icon-cost { color: #10b981; }
+.kpi-icon-efficiency { color: #8b5cf6; }
+
+/* Mini stat row inside the overview card */
+.fuel-mini-stat {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Card title */
+.card-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--on-surface-variant);
+  margin-bottom: 12px;
+}
